@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/koldaf.min.css"/>
+		<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/main.css"/>
+		<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.2.min.css" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.mobile-min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="cordova.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/location.js"></script>
+       <script>
+      function countChar(val) {
+        var len = val.value.length;
+        if (len >= 200) {
+          val.value = val.value.substring(0, 200);
+        } else {
+          $('#charNum').text(200 - len);
+        }
+      };
+	  
+    </script>
+	</head>
+   	<body>
+    		<div data-role="page" id="report" data-theme="g"  data-ajax="false">
+              <header data-role="header"  data-position="fixed" data-theme="g">
+                      <h1>Traffic Tracker::Report</h1>
+                      <a href="home.html" data-icon="home" data-iconpos="notext"> Take me Home </a>
+                      <a href="" data-role="button" data-icon="star" id="username">  </a>
+               </header>
+                  <article data-role="content">
+                  
+                  <h3>Report Traffic Situation</h3> 
+                        <form action="http://koldaftest.6te.net/trafport/engine/rpt.php" class="rpt" method="post" data-ajax="false">
+                          <div data-role="fieldcontain">
+                            <label for="location" class="ui-hidden-accessible"> Location </label>
+                            <input type="text" placeholder="Location" name="location" id="location">  
+                          </div>
+                          <div data-role="fieldcontain">
+                            <input type="hidden" name="user" id="userid">  
+                          </div>
+                          <div data-role="fieldcontain">
+                              <label for="reports" class="ui-hidden-accessible">Traffic Status</label>
+                              <textarea name="report" cols="10" rows="5" id="comment" placeholder="Traffic Situation Update (not more than 200 characters)" onKeyDown="countChar(this)"></textarea>
+                          </div>
+                          <div id="charNum"></div>
+                        <div data-role="fieldcontain">
+                          <div data-role="fieldcontain">
+                            <fieldset >
+                              <legend>Rate Traffic Status</legend>
+                              <input type="radio" name="status" id="status_0" value="1" />
+                              <label for="status_0">Free Flow</label>
+                              <input type="radio" name="status" id="status_1" value="2" />
+                              <label for="status_1">Slow and Steady</label>
+                              <input type="radio" name="status" id="status_2" value="3" />
+                              <label for="status_2">Locked Up</label>
+                            </fieldset>
+                          </div>
+                            
+                        </div>
+                        <div data-role="fieldcontain" id="geoLoc" >
+                            
+                        </div>
+                        <div data-role="fieldcontain">
+                            <input type="submit" name="submit" value="Submit">
+                        </div>
+                        <div id="wait"><img src='images/17.GIF' alt="Loading"> <br> Please Wait...</div>
+
+                        </form>
+
+                  </article>
+                  <footer  data-role="footer" data-position="fixed" data-theme="g">
+                      <div align="center">
+                          &copy;<?php echo date('-Y')?> koldaf concepts<br>
+                          <a href="tel:08097946436" style="color:#FFF"> Koledafe Olawale </a>
+                      </div>
+                  </footer>
+           </div>
+			<script>
+//				$("#report").on( "pageinit", function() {
+					$('#userid').val(window.localStorage.getItem("user"));
+					$('#username').append(window.localStorage.getItem("user"));
+					$('form.rpt').on('submit',function(){
+						//start form submission
+						var that = $(this),
+						url = that.attr('action'),
+						type = that.attr('method');
+						var data = that.serialize();
+						$.ajax({
+							url:url,
+							type:type,
+							data: data,
+							dataType:"json",
+							success: function(response)
+							{
+								$('#wait').hide();
+								if(response.success){	
+										if(response.result == 111){	
+											$('#wait').show();
+											$('#wait').html("You cannot poast an empty report... <br> Your report must not be more than 200 characters");
+											//alert("Please Complete all Fields");
+											setInterval(function(){
+													$('#wait').fadeOut("slow")
+												},5000);
+										}
+										else if(response.result == 112){
+											  $('#wait').show();
+											  $('#wait').html("Please Input the location you are reporting from");
+											  //alert("Username and Password not matched");
+											  setInterval(function(){
+												  $('#wait').fadeOut("slow")
+											  },5000);
+											}
+										else if(response.result == 113){
+											  $('#wait').hide();
+											  window.location='yes.html';
+											  //alert("Username and Password not matched");
+											}
+										else if(response.result == 114) {
+											  $('#wait').show();
+											  $('#wait').html("There was a fatal error... Please Try Again Later");
+											  //alert("Username and Password not matched");
+											  setInterval(function(){
+												  $('#wait').fadeOut("slow")
+											  },5000);
+											}
+										else { 
+												$('#wait').fadeIn("slow")
+												$('#wait').html("There was a terrible error <br> Please report to the developer on 08097946436");
+											  //alert("Username and Password not matched");
+											  setInterval(function(){
+												  $('#wait').fadeOut("slow")
+											  },5000);
+												//console.log(response);
+											 }
+							  }
+							},
+							beforeSend: function()
+							{
+								$('#wait').show();
+							},
+							error: function(e)
+							{
+								alert("An error Just Occur,\n Please Check Your Internet Connectivity");
+								//console.log(e);
+							}
+						});
+					//$('#load').hide();
+							return false;
+					
+					})
+			
+//				});
+			</script>
+    </body>
+     
+</html>

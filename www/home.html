@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/koldaf.min.css"/>
+		<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/main.css"/>
+		<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.2.min.css" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.mobile-min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="cordova.js"></script>
+        	<script>
+			function onLoad(){
+				document.addEventListener('deviceready',showConfirm(),false);
+				
+				// process the confirmation dialog result
+			  function onConfirm(buttonIndex) {
+				  navigator.app.exitApp();
+			  }	
+			}
+        			  
+			   //Show a custom confirmation dialog			  
+			  function showConfirm(){
+					  navigator.notification.confirm(
+						  'Are you sure you want to quit Traffic Tracker?',  // message
+						  onConfirm,              // callback to invoke with index of button pressed
+						  'Exit',            // title
+						  'Yes,No'          // buttonLabels
+					  );
+				  }
+        	</script>
+	</head>
+	<body onLoad="onLoad()">
+    	<!--This is the first page-->
+        <div data-role="page" id="home" data-theme="g" data-position="fixed" data-ajax="false">
+        	<!--Panel shows here-->
+            <!--Slide panel starts here-->
+            <div data-role="panel" data-theme="g" data-position="left" data-display="push" id="panel">
+                <div data-role="header" class="ui-btn">Traffic Menu </div>
+               <div data-role="controlgroup">
+                  <a href="#reg" data-ajax="false" class="ui-btn ui-corner-all">Be a Reporter</a>
+                  <a href="mailto:rs8.1.kwara@frsc.gov.ng" class="ui-btn ui-corner-all ui-icon-alert">Report Emergency</a>
+                  <a href="safety.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-alert">Safety Tips</a>
+                  <a href="tel:122" class="ui-btn ui-corner-all ui-icon-alert">Call FRSC Emergency Line</a>
+                  <a href="http://www.nysc.gov.ng/" class="ui-btn ui-corner-all ui-icon-alert">About NYSC</a>
+                  <a href="http://frsc.gov.ng/about-us/what-we-do" class="ui-btn ui-corner-all ui-icon-alert">About FRSC</a>
+                  <a href="about.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-carat-d">Developer</a>
+                  <a href="#exit" id="exit" class="ui-btn ui-corner-all ui-icon-carat-d" onClick="showConfirm">Exit</a>
+              </div>
+            </div>
+        	<header data-role="header" data-position="fixed">
+            	<h1>Traffic Tracker</h1>
+                <a href="#" data-icon="refresh" id="refresh" data-iconpos="right">Refresh</a>
+            </header>
+            <article data-role="content" class="ui-content">
+            	<!--<img src="images/koldaf.gif" id="loading" alt="Please Wait" width="80%" height="50%">-->
+                <img src="img/17.GIF" id="loading">
+                <!--<div id="admin" data-role="fieldcontain"></div>-->
+                <div id="display" data-filter="true" data-filter-placeholder="Search Traffic Report" data-ajax="false">
+                	
+                </div>
+            </article>
+        	<footer  data-role="footer" data-position="fixed">
+            	<nav data-role="navbar" class="ui-controlgroup-controls" align="center">
+                	<a href="#panel" ><img src="img/menu.png" class="ui-nodisc-icon myicon"> Menu </a>
+                    <a href="#login" > <img src="img/mic.png" class="ui-nodisc-icon myicon"> Report</a>
+                    <a href="#reg" > <img src="img/user.png" class="ui-nodisc-icon myicon">Join </a>
+                    <!--<a href="" id="report"> <img src="images/mic.png" class="ui-nodisc-icon myicon"> Report </a>-->
+                   <!-- <a href="#report" > <img src="images/mic.png" class="ui-nodisc-icon myicon"> Report </a>-->
+                </nav>
+            </footer>
+        </div>
+            	<!--This is the Loginpage-->
+        <div data-role="page" id="login" data-theme="g" data-position="fixed" data-title="Login" data-add-back-btn="true" data-back-btn-text="Take me Back">
+        	<header data-role="header">
+            <!--<a href="#home" data-icon="home" data-iconpos="notext"> Take me Home </a>-->
+            <h1>Log In</h1>
+            </header>
+            <article data-role="content" class="ui-content">
+            	<h3>Log In Here</h3>
+                <form method="post" class="login" action="http://koldaftest.6te.net/trafport/engine/login.php" data-ajax="false">
+                	<p><input type="text" name="username" placeholder="Input Your Username"/></p>
+                    <p><input type="password" name="pass" placeholder="Input Your Password"/></p>
+                    <p><input type="submit" name="login" value="Log In"></p>
+                </form>
+				<div id="wait"> <img src='img/17.GIF' alt="Loading"> <br>Logging you in...</div>
+            </article>
+        	<!--<footer  data-role="footer" data-position="fixed">
+            	<nav data-role="navbar" class="ui-controlgroup-controls" align="center">
+                    <a href="#reg" > <img src="images/user.png" class="ui-nodisc-icon myicon">Join </a>
+                    <a href="#report" > <img src="images/mic.png" class="ui-nodisc-icon myicon"> Report </a>
+                </nav>
+            </footer>-->
+            </div>
+            
+            <!--This is the Register page-->
+        <div data-role="page" id="reg" data-theme="g" data-position="fixed" data-title="Register" data-dom-cache="no-cache">
+        	<header data-role="header">
+            <!--<a href="#home" data-icon="home" data-iconpos="notext"> Take me Home </a>-->
+            <h1><big>Become a Member</big></h1>
+            </header>
+            <article data-role="main" class="ui-content">
+                <form method="post" action="http://koldaftest.6te.net/trafport/engine/register.php" class="reg" data-ajax="false">
+                
+                	<label for="username" class="ui-hidden-accessible"> Username </label>
+                    <input type="text" name="username" placeholder="Input Your Username"/>
+                    
+                    <label for="pass" class="ui-hidden-accessible"> Password </label>
+                    	<input type="password" name="pass" placeholder="Input Your Password"/>
+                        
+                    <label for="pass2" class="ui-hidden-accessible"> Password </label>
+                    	<input type="password" name="pass2" placeholder="Password Again"/>
+                        
+                        <label for="phone" class="ui-hidden-accessible"> Phone Number </label>
+                    	<input type="tel" name="phone" placeholder="Phone Number"/>
+                        
+                        <label for="email" class="ui-hidden-accessible"> E-mail </label>
+                    	<input type="email" name="email" placeholder="E-mail Address"/>
+                        
+					<label for="location" class="ui-hidden-accessible"> Location </label>
+                    <!--<select name="location" data-mini="true">
+                    	<option value=""> Select Location You Want to Report From </option>
+                        <option value="offagarrage">Offa Garage </option>
+                        <option value="Gaakanbi">Gaa Akanbi</option>
+                        <option> And Other Locations </option>
+                    </select>-->
+                       <input type="submit" name="signup" value="Sign Up">
+                </form>
+                <div id="load"><img src='img/17.GIF' alt="Loading"> <br>Completing Your Registration... Please Wait...</div>
+            </article>
+            
+        	<!--<footer  data-role="footer" data-position="fixed">
+            	for NYSC/FRSC CDS
+                <nav data-role="navbar" class="ui-controlgroup-controls" align="center">
+                   
+                </nav>
+            </footer>-->
+            <script>
+			//fetch json data...
+		$('#home').on('pageinit', function(){
+				$.ajaxSetup({cache:false,beforeSend: function(){
+					  $('#display').hide();
+					  $('#loading').show();
+				  },complete: function(){
+					  $('#loading').hide();
+					  $('#display').show();
+				  },success: function(){
+					  $('#loading').hide();
+					  $('#display').show();
+				  }, error: function(){
+					  alert('Please Check Your Network Connection');
+				  }
+				  });
+				  $('#refresh').click(function(){
+					window.location='home.html';
+				})
+					$.post('http://koldaftest.6te.net/trafport/engine/draft.php', function(data){//
+						var rep = jQuery.parseJSON(data);
+						var repHtml = '';//
+						$.each(rep, function(i, serverData){
+							repHtml = repHtml + '<div>' + dobgd(serverData.status, serverData.location) +
+													 '<p>'+
+													serverData.report + '</p>' + 
+													/*counts(i,serverData.like, serverData.dislike, serverData.ref) +*/ '<span>Posted By: '+
+													serverData.user + '</span> <small>'+
+													serverData.time+' ago</small></div>';
+						});
+						$('#display').html(repHtml);
+					})
+					/* $.get('http://koldaftest.6te.net/trafport/engine/note.php', function(cb){
+						 var ret = jQuery.parseJSON(cb);
+						 if(ret.display == 'on'){
+							 $('#admin').fadeIn('slow');
+							 $('#admin').html(ret.note);
+						 }
+						 else{
+							 $('#admin').fadeOut('slow');
+						 }
+					 });*/
+					/*$('#admin').load('http://koldaftest.6te.net/trafport/engine/note.php');*/
+				});
+				function counts(i, likes, dislikes, ref){
+					return '<section><a href="like.php?id='+ref+'" data-role="button" id="'+i+'"/> <img src="img/like.png" alt="Like"/>'+likes+'</a>'
+							+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+								  + '<a href="like.php?id='+ref+'" data-role="button" id="'+i+'"/> <img src="img/dislike.png" alt="Like"/>'+dislikes+'</a></section>';
+				}
+				function dobgd(stat,location){
+					if(stat == 1){
+						var h3 = '<h3 class="ui-bar ui-bar-g "><img src="img/signal icon.png" class="ui-nodisc-icon mypost">'
+									+ location +  '</h3>';
+					}
+					else if(stat == 2){
+						var h3 = '<h3 class="ui-bar ui-bar-g  steady "><img src="img/signal icon.png" class="ui-nodisc-icon mypost">'
+									+ location +  '</h3>';
+					}
+					else{
+						var h3 = '<h3 class="ui-bar ui-bar-g  lock "><img src="img/signal icon.png" class="ui-nodisc-icon mypost">'
+										+ location + '</h3>';
+					}
+					return h3;
+				}
+            //Signup Form
+	$("#reg").on( "pageinit", function() {
+			$('form.reg').on('submit',function(){
+			var that = $(this),
+				url = that.attr('action'),
+				type = that.attr('method');
+				var data = that.serialize();
+				$.ajax({
+					url:url,
+					type:type,
+					data: data,
+					dataType:"json",
+					success: function(returns)
+					{
+						$('#load').hide();
+						if(returns.success){
+							if(returns.result == 101){ alert("Please Complete all Fields");}
+							else if(returns.result == 102){ alert("Please Input a Valid Phone Number");}
+							else if(returns.result == 103){ alert("Password not matched");}
+							else if(returns.result == 104){ alert("Please Input a Valid Phone Number");}			
+							else if(returns.result == 105){ alert("Username or Email not available, \n Try Another one");}
+							else if(returns.result == 106){ alert("There was an error! \n Please ensure you have an active network");}
+							if(returns.result == 107){ alert("Registration Completed");
+														$.mobile.changePage('#login');
+															/*if(confirm('Do you want to upload traffic Report Now?'))
+															{ window.location='report.html';}
+															else{ window.location='home.html';}*/
+							
+							}
+						}			
+					},
+					beforeSend: function()
+					{
+						$('#load').show();
+					},
+					error: function(e)
+					{
+						alert("An error Just Occur,\n Please Check Your Internet Connectivity");
+						//console.log(e);
+					}
+			});
+			//$('#load').hide();
+			return false;
+			
+		})
+	}) //registration ends here
+	$("#login").on( "pageinit", function() {
+			//Login Form
+			$('form.login').on('submit',function(){
+				var that = $(this),
+					url = that.attr('action'),
+					type = that.attr('method');
+					var data = that.serialize();
+					$.ajax({
+						url:url,
+						type:type,
+						data: data,
+						dataType:"json",
+						success: function(response)
+						{
+							$('#wait').hide();
+							if(response.success){	
+								if(response.result == 101){	
+									$('#wait').show();
+									$('#wait').html("Complete All Fields");
+									//alert("Please Complete all Fields");
+									setInterval(function(){
+											$('#wait').fadeOut("slow");
+											
+										},5000);
+								}
+								else if(response.result == 102){
+									  $('#wait').show();
+									  $('#wait').html("Username and Password not matched");
+									  //alert("Username and Password not matched");
+									  setInterval(function(){
+										  $('#wait').fadeOut("slow")
+										 
+									  },5000);
+									}
+								else if(response.result == 103) {
+									window.localStorage['user'] = response.name;
+									window.location='report.html';}
+								else { 
+										$('#wait').fadeIn("slow")
+										$('#wait').html("There was a terrible error <br> Please report to the developer on 08097946436");
+									  //alert("Username and Password not matched");
+									  setInterval(function(){
+										  $('#wait').fadeOut("slow");
+										 
+									  },5000);
+										//console.log(response);
+									 }
+							}
+						},
+						error: function(e)
+						{
+							  $('#wait').html("An error Just Occur,\n Please Check Your Internet Connectivity");
+							  setInterval(function(){
+										  $('#wait').fadeOut("slow")
+									  },10000);
+							  //alert("An error Just Occur,\n Please Check Your Internet Connectivity");
+							
+						},
+						beforeSend: function()
+						{
+							$('#wait').fadeIn("slow");
+							//$('#reg').attr('disable')
+						}
+				});
+				return false;
+			})
+	});
+</script>
+            </div>
+	</body>
+</html>
